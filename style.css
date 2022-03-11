@@ -8,7 +8,7 @@ body {
     padding: 15px 5px;
     height: 100vh;
     display: flex;
-    justify-content: center; /*Центрирование по горизонтали*/
+    justify-content: center;
     align-items: center; 
 }
 

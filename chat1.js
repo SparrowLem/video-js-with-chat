@@ -8,7 +8,7 @@ let comments = [];
 //comments  = JSON.parse(localStorage.getItem('comments'));
 
 
-// формируем переписку
+// формирование переписки
 if (!localStorage.comments == 0) {
     //for (let i = 0; i < localStorage.length; i++) {
         //comments = JSON.parse(localStorage.getItem('comments'));
