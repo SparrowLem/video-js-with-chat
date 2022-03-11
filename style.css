@@ -14,8 +14,8 @@ body {
 
 .container-w-chat {
     display: grid;
-    /*grid-template-columns: 2fr 1fr;*/
-    grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));
+    grid-template-columns: 2fr 1fr;
+    /*grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));*/
     column-gap: 10px;
 
 }
@@ -24,9 +24,8 @@ body {
     display: none;
     order: 0;
     align-self: center;
-    max-width: 100%;
-    max-width: 400px;
-    /*min-width: auto;*/
+    /*max-width: 100%;*/
+    min-width: 240px;
 }
 
 .chat-content-messages {
@@ -83,16 +82,16 @@ body {
   }
 
 .player{
-   grid-column: span 2;
-   min-width: 240px;
+   /*grid-column: span 2;*/
    width: 100%;
+   min-width: 240px;
    height: 400px;
    background-color: antiquewhite;
    margin: 5px;
-   /*padding: 5px;*/
 }
 
 .player-w-chat {
+    min-width: 240px;
     order: -1; 
     align-self: center;
     width: 99%;
@@ -102,7 +101,7 @@ body {
 
 
 .video-fm {
-    width: auto;
+    min-width: 240px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -111,4 +110,9 @@ body {
     width: 100%;
     height: 100%;
     padding: 10px;
+}
+
+.vjs-control-text {
+display: none;
+
 }
