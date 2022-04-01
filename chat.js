@@ -1,59 +1,102 @@
-let chatContent = document.querySelector('.chat-content'); // Контейнер для сообщений
-let newMessageForm = document.querySelector('.chat-form'); // Форма и поле ввода текста
-let newMessageInput = document.querySelector('.chat-form-input'); 
-// Шаблон для сообщения
-let messageTemplate = document.querySelector('#message-template').content;
-//let newMessageTemplate = messageTemplate.querySelector('.chat-message');
-let comments = [];//
-//let comments = JSON.parse(localStorage.getItem('comments')) || [];
+let player = videojs('video-fm');
+player.muted(true);
+
+//videojs.dom.createEl 
+/*let con = player.createEl('div');
+document.body.append(con);*/
+let cont = player.el();
+console.log(cont);
+cont.style.width = '500px';
+//cont.style.dislay = 'grid';
 
 
-if (localStorage.comments) {
-    // формируем переписку
-    localStorage.comments
-        .split('</p>,')
-        .map(p => chatContent.insertAdjacentHTML('beforeend', p))
-}
+let messages = JSON.parse(localStorage.getItem('messages')) || [];
+console.log(messages.lenght);
+console.log(messages[0].message);
 
-function addMessage (evt) {    //функция отправки сообщений
-      evt.preventDefault()
-        let messageText = newMessageInput.value; // Получаем текст из поля ввода 
-        let template = `<p><span>${'User1'}</span> ${messageText}</p>`;
+if (messages.lenght>0) {
+    console.log(messages);
+    //let users = JSON.parse(localStorage.getItem('messages'));
+    //console.log(users);
+    //console.log(users[0].message);}
+       for (let i = 0; i<messages.lenght; i++){
+            console.log(messages[i].message);
+            let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
+            chatContent.insertAdjacentHTML('afterbegin', template);
+        }
+};
 
-    // добавляем шаблон в контейнер
-    chatContent.insertAdjacentHTML('afterbegin', template)
-    // сбрасываем значение инпут
-    newMessageInput.value = ''
-    // записываем сообщение в хранилище
-    //localStorage.comments = template
-    //comments.push(template)
-    //localStorage.setItem(comments, JSON.stringify(template));
-    // массив сообщений
-    // заполняем массив
-      
-    //comments.push(template);
+//функция создание контейнера для сообщений и формы
+function createChat () {
+    let chatContent = document.createElement('div');
+        //cont.appendChild(chatContent);
+    document.body.appendChild(chatContent);
+    chatContent.style.cssText = `height:100px;
+    max-height: 105px;
+    overflow: scroll;
+    max-width: 300px;
+    border: 1px dashed rgb(180, 180, 180)`;
+        //создание формы отправки
+    document.querySelector('body').insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button>Отправить</button></form>');
+       // })
     
-    // записываем сообщение в хранилище
-    localStorage.comments = template
-}; 
+};
 
+
+//функция отправки сообщений
+function sendMessage() {
+    form.addEventListener('submit', function addMessage (evt) { 
+        console.log('fuctionAddMessage');
+        evt.preventDefault();
+        
+        let obj = {};
+        let inputText = document.querySelector('input'); 
+        let messageText = inputText.value;
+        let template = `<p><span>${'User1'}</span> ${messageText}</p>`;
+        chatContent.insertAdjacentHTML('afterbegin', template);
+        obj.name = 'User1';
+        obj.message = messageText;
+        messages.push(obj);
+            
+        inputText.value = '';
+    });
+};
+
+
+let change = false;
+if (!change) {
+    player.on('play', function() {
+       createChat(); 
+    })
+    change = true;
+};
+
+//переменная для формы оправки
+//let form = document.querySelector('form'); 
+//console.log(form);
+
+//функция отправки сообщения
+/*if (form) {
+    console.log(form);
+    sendMessage;
+};*/
+
+console.log(messages);
+
+//при закрытии окна сохранение сообщений в localStorage
 window.onbeforeunload = function (evt) { 
-	let warning = "Document 'foo' is not saved. ";
-	if (typeof evt == "undefined") {
-		evt = window.event;
-	}
-	if (evt) {
-		evt.returnValue = warning;
-         // заполняем массив
-         document.querySelectorAll('p').forEach(p => comments.push(p.outerHTML));
-        // записываем данные в хранилище
-        localStorage.comments = comments;
-	}
-	return warning;
-   
-}  
-
-newMessageForm.addEventListener('submit', addMessage); 
-
-//localStorage.clear();
-//comments = [];
+    let warning = "Document 'too' is not saved. ";
+        if (typeof evt == "undefined") {
+            evt = window.event;
+        }
+        if (evt) {
+            evt.returnValue = warning;
+            
+            localStorage.setItem('messages', JSON.stringify(messages));
+            console.log(localStorage);
+            //let users = JSON.parse(localStorage.getItem('messages'));
+        }
+        return warning;
+       
+}; 
+//}; 
