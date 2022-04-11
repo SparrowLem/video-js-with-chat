@@ -2,33 +2,21 @@ let player = videojs('video-fm');
 player.muted(true);
 
 //videojs.dom.createEl 
-/*let con = player.createEl('div');
-document.body.append(con);*/
-let cont = player.el();
-console.log(cont);
-cont.style.width = '500px';
-//cont.style.dislay = 'grid';
+let chat = player.createEl('div');
+chat.style.width = '500px';
+chat.style.background = 'red';
+player.appendChild(chat);
+/*let chat = player.el();
+console.log(chat);
+chat.style.width = '500px';*/
 
 
 let messages = JSON.parse(localStorage.getItem('messages')) || [];
-console.log(messages.lenght);
-console.log(messages[0].message);
-
-if (messages.lenght>0) {
-    console.log(messages);
-    //let users = JSON.parse(localStorage.getItem('messages'));
-    //console.log(users);
-    //console.log(users[0].message);}
-       for (let i = 0; i<messages.lenght; i++){
-            console.log(messages[i].message);
-            let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
-            chatContent.insertAdjacentHTML('afterbegin', template);
-        }
-};
 
 //функция создание контейнера для сообщений и формы
 function createChat () {
     let chatContent = document.createElement('div');
+    chatContent.classList.add('chat-content');
         //cont.appendChild(chatContent);
     document.body.appendChild(chatContent);
     chatContent.style.cssText = `height:100px;
@@ -37,16 +25,36 @@ function createChat () {
     max-width: 300px;
     border: 1px dashed rgb(180, 180, 180)`;
         //создание формы отправки
-    document.querySelector('body').insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button>Отправить</button></form>');
+   chat.insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button type="submit">Отправить</button></form>');
        // })
-    
+
+    function historyChat() {
+        if (messages.length>0) {
+            //let users = JSON.parse(localStorage.getItem('messages'));
+            //console.log(users);
+            //console.log(users[0].message);}
+            for (let i = 0; i<messages.length; i++){
+                    console.log(messages[i].message);
+                    let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
+                    chatContent.insertAdjacentHTML('afterbegin', template);
+            }
+            
+        }
+    }
+    return historyChat();
 };
 
+let form = document.querySelector('form'); 
+console.log(form);
 
 //функция отправки сообщений
 function sendMessage() {
-    form.addEventListener('submit', function addMessage (evt) { 
-        console.log('fuctionAddMessage');
+    let form = document.querySelector('form'); 
+    console.log(form);
+
+    let chatContent = document.querySelector('.chat-content'); 
+
+    form.addEventListener('submit', function (evt) { 
         evt.preventDefault();
         
         let obj = {};
@@ -64,22 +72,22 @@ function sendMessage() {
 
 
 let change = false;
-if (!change) {
-    player.on('play', function() {
+player.on('play', function() {
+    if (!change) {
        createChat(); 
-    })
-    change = true;
-};
+        sendMessage();
+       change = true;
+    } return change;
+});
 
-//переменная для формы оправки
-//let form = document.querySelector('form'); 
-//console.log(form);
+console.log(change);
 
 //функция отправки сообщения
-/*if (form) {
+if (change === true) {
     console.log(form);
-    sendMessage;
-};*/
+    sendMessage();
+    //historyChat();
+};
 
 console.log(messages);
 
