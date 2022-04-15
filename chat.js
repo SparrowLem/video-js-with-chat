@@ -3,13 +3,21 @@ player.muted(true);
 
 //videojs.dom.createEl 
 let chat = player.createEl('div');
-chat.style.width = '500px';
-chat.style.background = 'red';
-player.appendChild(chat);
+//let chat = player.createEl('div', {className: 'vjs-text-visible'});
+//player.insertContent(chat);
+//chat.style.width = '800px';
+console.log(chat);
+
+
+//chat.style.cssText = `position: absolute`
+//chat.style.width = '800px';
+//chat.style.background = 'red';
+//chat.style.cssText = `float: left
+//`;
+//player.addChild(chat);
 /*let chat = player.el();
 console.log(chat);
 chat.style.width = '500px';*/
-
 
 let messages = JSON.parse(localStorage.getItem('messages')) || [];
 
@@ -25,7 +33,7 @@ function createChat () {
     max-width: 300px;
     border: 1px dashed rgb(180, 180, 180)`;
         //создание формы отправки
-   chat.insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button type="submit">Отправить</button></form>');
+        document.querySelector('body').insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button type="submit">Отправить</button></form>');
        // })
 
     function historyChat() {
