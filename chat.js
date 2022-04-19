@@ -1,23 +1,31 @@
 let player = videojs('video-fm');
 player.muted(true);
 
-//videojs.dom.createEl 
-let chat = player.createEl('div');
-//let chat = player.createEl('div', {className: 'vjs-text-visible'});
-//player.insertContent(chat);
-//chat.style.width = '800px';
+/*let chat = videojs.dom.createEl('div', {className: 'vjs-text-visible', background: 'red', width: '400px', height: '400px'});
+let container = player.addChild('chat');
+console.log(container);*/
+
+//let domEl = videojs.dom.isEl(chat);
+//let posicion = videojs.dom.findPosition(chat);
+//console.log(domEl);
+//console.log(posicion);
+//console.log(chat);
+
+class Container {
+    constructor(options) {
+        this.$el = videojs.dom.createEl(options.type);
+        //this.$el = document.querySelector(options.type);
+        this.$el.style.display = 'block';
+    }
+};
+
+let container = new Container({
+    type: 'div'
+});
+console.log(container);
+let chat = player.addChild('container');
 console.log(chat);
 
-
-//chat.style.cssText = `position: absolute`
-//chat.style.width = '800px';
-//chat.style.background = 'red';
-//chat.style.cssText = `float: left
-//`;
-//player.addChild(chat);
-/*let chat = player.el();
-console.log(chat);
-chat.style.width = '500px';*/
 
 let messages = JSON.parse(localStorage.getItem('messages')) || [];
 
