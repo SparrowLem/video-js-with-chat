@@ -4,8 +4,18 @@
 	class SomeComponent extends videojs.getComponent('Component') {
 		constructor(player, options) {
 			super(player, options);
-			this.el().innerHTML = `<div>SomeComponent</div>`;
-            this.el().style.background = options.background;
+			this.el().innerHTML = `
+			<div class="ChatMessages" style="height: 80%; background: rgba(205, 214, 219, 0.3)"></div>
+			<form action="" method="post">
+				<input type="text" required style="background: rgba(205, 214, 219, 0.3)"><button type="submit">Отправить</button>
+			</form>
+			</div>`;
+			this.el().style.cssText = `display: block;
+			height:200px;
+			z-index: 9999;
+			position: absolute;
+			bottom: 21px;
+			left: 5px`;
 		}
 
 		// Этот метод вызывается самим videojs при монтировании компонента
@@ -14,17 +24,6 @@
 			return videojs.dom.createEl('div', { className: 'vjs-some-component' });
 		}
 	}
-
-const ChatContent = new SomeComponent(videojs('video-fm'), {background:'red'});
-/*const ChatForm = new SomeComponent(videojs('video-fm'), {
-    innerHTML: '<form action="" method="post"><input type="text" required><button type="submit">Отправить</button></form>',
-    className: 'chat-content'
-});
-const ChatMessages = new SomeComponent(videojs('video-fm'), {
-    innerHTML: '<div>SomeComponent</div>',
-    className: 'chat-messages'
-});*/
-
 
 	// Регистрирую компонент, чтобы videojs знал, что он существует
 	videojs.registerComponent('SomeComponent', SomeComponent);
