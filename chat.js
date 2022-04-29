@@ -1,126 +1,133 @@
-let player = videojs('video-fm');
-player.muted(true);
+'use strict';
 
-let chat = videojs.dom.createEl('div', {className: 'vjs-text-visible', background: 'red', width: '400px', height: '400px'});
-let container = player.addChild('chat');
-console.log(container);
+(() => {
+	class SomeComponent extends videojs.getComponent('Component') {
+		constructor(player, options) {
+			super(player, options);
+			this.el().innerHTML = `
+			<div class="chat-messages" style="height: 80%; background: rgba(205, 214, 219, 0.3);
+    		overflow: scroll;"></div>
+			<form action="" method="post">
+				<input type="text" required style="background: rgba(205, 214, 219, 0.3)"><button type="submit">Отправить</button>
+			</form>
+			</div>`;
+			this.el().style.cssText = `display: none;
+			height:200px;
+			z-index: 9999;
+			position: absolute;
+			bottom: 21px;
+			left: 5px`;
+		}
 
-//let domEl = videojs.dom.isEl(chat);
-//let posicion = videojs.dom.findPosition(chat);
-//console.log(domEl);
-//console.log(posicion);
-//console.log(chat);
+		// Этот метод вызывается самим videojs при монтировании компонента
+		createEl() {
+			// Созданный тут элемент будет родительским для этого компоннета. Его можно будет получить вызвав this.el()
+			return videojs.dom.createEl('div', { className: 'vjs-some-component chat-content' });
+		}
+	}
 
-/*class Container {
-    constructor(options) {
-        this.$el = videojs.dom.createEl(options.type);
-        //this.$el = document.querySelector(options.type);
-        this.$el.style.display = 'block';
-    }
-};
+	// Регистрирую компонент, чтобы videojs знал, что он существует
+	videojs.registerComponent('SomeComponent', SomeComponent);
 
-let container = new Container({
-    type: 'div'
-});
-console.log(container);
-let chat = player.addChild('container');
-console.log(chat);*/
+  //let ps = new SomeComponent();  
 
+	// Создаю плагин
+	class SomePlugin extends videojs.getPlugin('plugin') {
+		constructor(player, options) {
+			super(player, options);
 
-let messages = JSON.parse(localStorage.getItem('messages')) || [];
+			// Плагин после того как в плеер происходит событие ready добавляет плееру класс vjs-some-plugin и добавляет дочерний компонент SomeComponent созданный ранее
+			player.on('ready', function() {
+                player.addClass(options.customClass)
+				player.addClass('vjs-some-plugin');
+				player.addChild('SomeComponent', options);
 
-//функция создание контейнера для сообщений и формы
-function createChat () {
-    let chatContent = document.createElement('div');
-    chatContent.classList.add('chat-content');
-        //cont.appendChild(chatContent);
-    document.body.appendChild(chatContent);
-    chatContent.style.cssText = `height:100px;
-    max-height: 105px;
-    overflow: scroll;
-    max-width: 300px;
-    border: 1px dashed rgb(180, 180, 180)`;
-        //создание формы отправки
-        document.querySelector('body').insertAdjacentHTML('afterbegin','<form action="" method="post"><input type="text" required><button type="submit">Отправить</button></form>');
-       // })
+                let messages = JSON.parse(localStorage.getItem('messages')) || [];
+                console.log(messages);
 
-    function historyChat() {
-        if (messages.length>0) {
-            //let users = JSON.parse(localStorage.getItem('messages'));
-            //console.log(users);
-            //console.log(users[0].message);}
-            for (let i = 0; i<messages.length; i++){
-                    console.log(messages[i].message);
-                    let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
-                    chatContent.insertAdjacentHTML('afterbegin', template);
+				function historyChat() {
+					if (messages.length>0) {
+						for (let i = 0; i<messages.length; i++){
+								console.log(messages[i].message);
+								let chatMessages = document.querySelector('.chat-messages'); 
+								let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
+								chatMessages.insertAdjacentHTML('afterbegin', template);
+						}
+						
+					}
+				}
+
+				//функция отправки сообщений
+				function sendMessage() {
+					let form = document.querySelector('form'); 
+					console.log(form);
+					let chatContent = document.querySelector('.chat-content');
+					chatContent.style.display = 'block';
+					let chatMessages = document.querySelector('.chat-messages'); 
+				
+					form.addEventListener('submit', function (evt) { 
+						evt.preventDefault();
+						
+						let obj = {};
+						let inputText = document.querySelector('input'); 
+						let messageText = inputText.value;
+						let template = `<p><span>${'User1'}</span> ${messageText}</p>`;
+						//template.style.cssText = `margin: 0;`
+						chatMessages.insertAdjacentHTML('afterbegin', template);
+						obj.name = 'User1';
+						obj.message = messageText;
+						messages.push(obj);
+							
+						inputText.value = '';
+					});
+				};
+                
+				let videoPlay = false;
+				player.on('play', function() {
+					if (!videoPlay) {
+						historyChat()
+						sendMessage();
+						videoPlay = true;
+					} return videoPlay;
+				});
+
+				console.log(videoPlay);
+
+							//функция отправки сообщения
+				if (videoPlay === true) {
+				console.log(form);
+				sendMessage();
+				historyChat();
+				};
+
+				//при закрытии окна сохранение сообщений в localStorage
+				window.onbeforeunload = function (evt) { 
+					let warning = "Document 'too' is not saved. ";
+						if (typeof evt == "undefined") {
+							evt = window.event;
+						}
+						if (evt) {
+							evt.returnValue = warning;
+							
+							localStorage.setItem('messages', JSON.stringify(messages));
+							console.log(localStorage);
+							//let users = JSON.parse(localStorage.getItem('messages'));
+						}
+						return warning;
+					
+				}; 
+			});
+		}
+	}
+	// Регистрирую плагин чтобы videojs знал о его существовании
+	videojs.registerPlugin('somePlugin', SomePlugin);
+
+	// Инициализирую плеер
+    videojs('video-fm', {
+		plugins: {
+			somePlugin: {
+                customClass: 'check' 
             }
-            
-        }
-    }
-    return historyChat();
-};
-
-let form = document.querySelector('form'); 
-console.log(form);
-
-//функция отправки сообщений
-function sendMessage() {
-    let form = document.querySelector('form'); 
-    console.log(form);
-
-    let chatContent = document.querySelector('.chat-content'); 
-
-    form.addEventListener('submit', function (evt) { 
-        evt.preventDefault();
-        
-        let obj = {};
-        let inputText = document.querySelector('input'); 
-        let messageText = inputText.value;
-        let template = `<p><span>${'User1'}</span> ${messageText}</p>`;
-        chatContent.insertAdjacentHTML('afterbegin', template);
-        obj.name = 'User1';
-        obj.message = messageText;
-        messages.push(obj);
-            
-        inputText.value = '';
-    });
-};
-
-
-let change = false;
-player.on('play', function() {
-    if (!change) {
-       createChat(); 
-        sendMessage();
-       change = true;
-    } return change;
-});
-
-console.log(change);
-
-//функция отправки сообщения
-if (change === true) {
-    console.log(form);
-    sendMessage();
-    //historyChat();
-};
-
-console.log(messages);
-
-//при закрытии окна сохранение сообщений в localStorage
-window.onbeforeunload = function (evt) { 
-    let warning = "Document 'too' is not saved. ";
-        if (typeof evt == "undefined") {
-            evt = window.event;
-        }
-        if (evt) {
-            evt.returnValue = warning;
-            
-            localStorage.setItem('messages', JSON.stringify(messages));
-            console.log(localStorage);
-            //let users = JSON.parse(localStorage.getItem('messages'));
-        }
-        return warning;
-       
-}; 
-//}; 
+		}
+	});
+})();
