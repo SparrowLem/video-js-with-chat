@@ -1,0 +1,9 @@
+.vjs-chat-content {
+    display: block;
+    height:200px;
+	z-index: 9999;
+    position: absolute;
+	bottom: 21px;
+	left: 5px
+};
+
