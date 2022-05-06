@@ -20,10 +20,18 @@
 			bottom: 21px;
 			left: 5px`;
 			this.messages = JSON.parse(localStorage.getItem('messages')) || [];
-			player.on('play', () => this.renderMessages());
-			player.on('play', () => this.sendMessage());
+			//this.messages = [];
 
-			window.onbeforeunload = function (evt) { 
+			let change = false;
+			player.on('play', () => {
+				if (!change) {
+				this.renderMessages();
+				this.sendMessage();
+				change = true;
+				} return change; 
+			});
+
+			window.onbeforeunload = (evt) =>  { 
 				let warning = "Document 'too' is not saved. ";
 					if (typeof evt == "undefined") {
 						evt = window.event;
@@ -40,18 +48,18 @@
 		}
 
 		// Этот метод вызывается самим videojs при монтировании компонента
-		createEl() {
+		createEl () {
 			// Созданный тут элемент будет родительским для этого компоннета. Его можно будет получить вызвав this.el()
 			return videojs.dom.createEl('div', { className: 'vjs-some-component chat-content' });
 		}
 
-		renderMessages() {
-			let messages = this.messages;
-					if (messages.length>0) {
-						for (let i = 0; i<messages.length; i++){
-								console.log(messages[i].message);
+		renderMessages = () => {
+			//let messages = this.messages;
+					if (this.messages.length>0) {
+						for (let i = 0; i<this.messages.length; i++){
+								console.log(this.messages[i].message);
 								let chatMessages = document.querySelector('.chat-messages'); 
-								let template = `<p><span>${'User1'}</span> ${messages[i].message}</p>`; 
+								let template = `<p><span>${'User1'}</span> ${this.messages[i].message}</p>`; 
 								chatMessages.insertAdjacentHTML('afterbegin', template);
 						}
 						
@@ -60,8 +68,6 @@
 
 
 		sendMessage() {
-			//let messages = JSON.parse(localStorage.getItem('messages')) || [];
-			//let messages = this.messages;
 			let form = document.querySelector('form'); 
 			console.log(form);
 			let chatContent = document.querySelector('.chat-content');
@@ -71,7 +77,7 @@
 		
 			console.log(chatMessages);
 						
-			form.addEventListener('submit', function (evt) { 
+			form.addEventListener('submit', (evt) => { 
 				evt.preventDefault();
 								
 				let obj = {};
@@ -81,16 +87,15 @@
 				chatMessages.insertAdjacentHTML('afterbegin', template);
 				obj.name = 'User1';
 				obj.message = messageText;
-				//messages.push(obj);
 				this.messages.push(obj);
 				console.log(obj);
 				inputText.value = '';
 			});
 			return this.messages;
-			//return messages;
 		};
 	
 	};
+	
 	// Регистрирую компонент, чтобы videojs знал, что он существует
 	videojs.registerComponent('ChatContainer', ChatContainer);
 
