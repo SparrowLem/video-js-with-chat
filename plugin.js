@@ -54,8 +54,7 @@
 			let chatContent = document.querySelector('.vjs-chat-content');
 			let chatMessages = document.querySelector('.chat-messages'); 
 
-			chatContent.style.display = 'block';
-			//chatContent.classList.add('vjs-chat-content_hide');
+			chatContent.classList.add('vjs-chat-content-hide');
 						
 			form.addEventListener('submit', (evt) => { 
 				evt.preventDefault();
