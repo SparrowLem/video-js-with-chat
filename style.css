@@ -1,12 +1,12 @@
-.vjs-chat-content {
-    display: none;
+.vjs-chat-content-hide{
+    display: block;
     height:200px;
 	z-index: 9999;
     position: absolute;
 	bottom: 21px;
 	left: 5px
-};
-
-.vjs-chat-content_hide{
-    display: block;
 }
+
+.vjs-chat-content {
+    display: hidden;
+};

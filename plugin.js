@@ -17,13 +17,9 @@
 				
 			this.messages = JSON.parse(localStorage.getItem('messages')) || [];
 
-			let change = false;
-			player.on('play', () => {
-				if (!change) {
+			player.one('play', () => {
 				this.renderMessages();
 				this.sendMessage();
-				change = true;
-				} 
 			});
 
 			window.addEventListener('unload', (evt) =>  { 
