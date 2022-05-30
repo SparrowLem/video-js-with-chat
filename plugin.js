@@ -38,7 +38,7 @@
 
 				<div class ="chat-bottom">
 					<div class="chat-textbox">
-						<img src="images/iconUser.png">
+						<img src="image/iconUser.png">
 
 						<form  class="chat-input" action="" method="post">
 							<input class="input-text" type="text" required placeholder="Добавить комментарий" maxlength="300">
