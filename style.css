@@ -158,7 +158,7 @@ body{
 
 .chat-buttom-like .heart {
     opacity: 1;
-    background-image: url(likeWhite.png);
+    background-image: url(image/likeWhite.png);
     width: 20px;
     height: 20px;
     background-position: center;
