@@ -2,19 +2,55 @@
 
 (() => {
 	class ChatContainer extends videojs.getComponent('Component') {
-		
+
 		constructor(player, options) {
 			super(player, options);
 			this.addClass(options.customClass);
-			
+
 			this.el().innerHTML = `
-				<div class="chat-messages" style="height: 80%; background: rgba(205, 214, 219, 0.3);
-				overflow: scroll;"></div>
-				<form action="" method="post">
-					<input type="text" required style="background: rgba(205, 214, 219, 0.3)">
-					<button type="submit">Отправить</button>
-				</form>`;
-				
+				<div class="chat-list-messages" style="height: 80%; background: rgba(205, 214, 219, 0.1);
+				overflow: scroll;">
+
+					<div class="chat-message-block">
+						<div class="chat-message-avatar">
+							<img class="chat-avatar-img">
+						</div>
+
+						<div class="chat-message-comment">
+							<span class="chat-message-user">User1</span>
+							<p class="chat-message-text">Какие дельфины самые большие?</p>
+						</div>
+					</div>
+
+					<div class="chat-message-block">
+						<div class="chat-message-avatar">
+							<img class="chat-avatar-img">
+						</div>
+
+						<div class="chat-message-comment chat-message-comment-admin">
+							<span class="chat-message-user">Admin</span>
+							<p class="chat-message-text">Самый большой дельфин - касатка. Коса́тка (лат. Orcinus orca) — вид китообразных из семейства дельфиновых (дельфинов)
+							 парвотряда зубатых китов. Единственный современный представитель рода косаток.</p>
+						</div>
+					</div>
+
+				</div>
+
+				<div class ="chat-bottom">
+					<div class="chat-textbox">
+						<img src="iconUser.png">
+
+						<form  class="chat-input" action="" method="post">
+							<input class="input-text" type="text" required placeholder="Добавить комментарий" maxlength="300">
+						</form>
+					</div>
+
+					<div class="chat-buttom-like">
+					<button class="heart" type="button"></button>
+					</div>
+				</div>`;
+
+
 			this.messages = JSON.parse(localStorage.getItem('messages')) || [];
 
 			player.one('play', () => {
@@ -22,7 +58,7 @@
 				this.sendMessage();
 			});
 
-			window.addEventListener('unload', (evt) =>  { 
+			window.addEventListener('unload', (evt) =>  {
 				localStorage.setItem('messages', JSON.stringify(this.messages));
 			});
 		}
@@ -36,30 +72,49 @@
 		renderMessages = () => {
 			if (this.messages.length>0) {
 				for (let i = 0; i<this.messages.length; i++){
-					let chatMessages = document.querySelector('.chat-messages'); 
-					let template = `<p><span>${'User1'}</span> ${this.messages[i].message}</p>`; 
-					chatMessages.insertAdjacentHTML('afterbegin', template);
+					let chatMessages = document.querySelector('.chat-list-messages');
+					let template = `<div class="chat-message-block">
+					<span class="chat-message-avatar">
+						<img class="chat-avatar-img">
+					</span>
+
+					<div class="chat-message-comment">
+						<div class="chat-message-user">${'User1'}</div>
+						<p class="chat-message-text">${this.messages[i].message}</p>
+						</div>
+					</div>`;
+					chatMessages.insertAdjacentHTML('beforeend', template);
 				}
-						
+
 			}
 		}
 
 
 		sendMessage() {
-			let form = document.querySelector('form'); 
+			let form = document.querySelector('form');
 			let chatContent = document.querySelector('.vjs-chat-content');
-			let chatMessages = document.querySelector('.chat-messages'); 
+			let chatMessages = document.querySelector('.chat-list-messages');
 
 			chatContent.classList.add('vjs-chat-content-hide');
-						
-			form.addEventListener('submit', (evt) => { 
+
+			form.addEventListener('submit', (evt) => {
 				evt.preventDefault();
-								
+
 				let obj = {};
-				let inputText = document.querySelector('input'); 
+				let inputText = document.querySelector('input');
 				let messageText = inputText.value;
-				let template = `<p><span>${'User1'}</span> ${messageText}</p>`;
-				chatMessages.insertAdjacentHTML('afterbegin', template);
+				let template = `<div class="chat-message-block">
+				<span class="chat-message-avatar">
+					<img class="chat-avatar-img">
+				</span>
+
+				<div class="chat-message-comment">
+					<span class="chat-message-user">${'User1'}</span>
+					<p class="chat-message-text">${messageText}</p>
+				</div>
+			</div>`;
+
+				chatMessages.insertAdjacentHTML('beforeend', template);
 				obj.name = 'User1';
 				obj.message = messageText;
 				this.messages.push(obj);
@@ -67,9 +122,9 @@
 			});
 
 		};
-	
+
 	};
-	
+
 	// Регистрирую компонент, чтобы videojs знал, что он существует
 	videojs.registerComponent('ChatContainer', ChatContainer);
 
