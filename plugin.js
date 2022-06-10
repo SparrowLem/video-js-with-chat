@@ -7,6 +7,12 @@
 			super(player, options);
 			this.addClass(options.customClass);
 
+			let controlChat = player.getChild('ControlBar').addChild('button', {
+      	controlText: 'Chatcontrol',
+        className: 'vjs-visible-text vjs-button-chat'
+      });
+      controlChat.addClass('vjs-chat-control');
+
 			this.el().innerHTML = `
 				<div class="chat-list-messages" style="height: 80%; background: rgba(205, 214, 219, 0.1);
 				overflow: scroll;">
@@ -38,10 +44,10 @@
 
 				<div class ="chat-bottom">
 					<div class="chat-textbox">
-						<img src="image/iconUser.png">
+						<img class="icon-user" src="iconUser.png">
 
 						<form  class="chat-input" action="" method="post">
-							<input class="input-text" type="text" required placeholder="Добавить комментарий" maxlength="300">
+							<input class="input-text" type="text" required placeholder="Добавить комментарий" maxlength="300" contenteditable="true">
 						</form>
 					</div>
 
@@ -56,6 +62,7 @@
 			player.one('play', () => {
 				this.renderMessages();
 				this.sendMessage();
+				this.addMessages();
 			});
 
 			window.addEventListener('unload', (evt) =>  {
@@ -63,11 +70,14 @@
 			});
 		}
 
+
+
 		// Этот метод вызывается самим videojs при монтировании компонента
 		createEl () {
 			// Созданный тут элемент будет родительским для этого компоннета. Его можно будет получить вызвав this.el()
 			return videojs.dom.createEl('div', { className: 'vjs-chat-component vjs-chat-content' });
 		}
+
 
 		renderMessages = () => {
 			if (this.messages.length>0) {
@@ -110,7 +120,7 @@
 
 				<div class="chat-message-comment">
 					<span class="chat-message-user">${'User1'}</span>
-					<p class="chat-message-text">${messageText}</p>
+					<div contenteditable class=editor class="chat-message-text">${messageText}</div>
 				</div>
 			</div>`;
 
@@ -122,6 +132,79 @@
 			});
 
 		};
+
+		addMessages() {
+			let arrayMessages = [
+				{
+					"id": "0",
+					"userName": "Admin",
+					"isPinned": true,
+					"isAdmin": true,
+					"message": "Дополнительная скидка 15% по промокоду ВЕСНА15",
+					"avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
+					"answerTo": null
+				}, {
+					"id": "1",
+					"userName": "Костя Морозов",
+					"isPinned": false,
+					"isAdmin": false,
+					"message": "Надюша начинай",
+					"avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
+					"answerTo": null
+				}, {
+					"id": "2",
+					"userName": "Рузанна Комиссарова",
+					"isPinned": false,
+					"isAdmin": false,
+					"message": "Здравствуйте, как купить туфли",
+					"avatar": null,
+					"answerTo": null
+				}, {
+					"id": "3",
+					"userName": "Admin",
+					"isPinned": false,
+					"isAdmin": true,
+					"message": "Надюша начинай",
+					"avatar": null,
+					"answerTo": "2"
+				}
+			];
+
+			let inssertMessages = function(array){
+				for (let i = 0; i<array.length; i++) {
+					let chatMessages = document.querySelector('.chat-list-messages');
+					let template = `<div id=${i} class="chat-message-block <!---${array[i].isPinned ? 'chat-message-pin' : ''}-->">
+						<span class="chat-message-avatar">
+							<img class="chat-avatar-img" src="${(array[i].avatar !== null) ? array[i].avatar : 'icon-user.png'}">
+						</span>
+
+						<div class="chat-message-comment ${array[i].isAdmin ? 'chat-message-comment-admin' : ''}">
+							<div class="chat-message-user">${array[i].userName}</div>
+							<p class="chat-message-text">${array[i].message}</p>
+						</div>
+					</div>`;
+
+				if (array[i].isPinned){
+					console.log('admin');
+					template = `<div id=${i} class="chat-message-block chat-message-pin">
+
+					<div class="chat-message-comment chat-message-comment-pin">
+						<div class="message-pin-img">
+							<img class="chat-pin-icon" src="point11.png">
+						</div>
+						<div class="chat-text-pin">
+							<div class="chat-message-user">${array[i].userName}</div>
+							<p class="chat-message-text">${array[i].message}</p>
+						</div>
+					</div>
+					</div>`
+				}
+				chatMessages.insertAdjacentHTML('beforeend', template);
+				}
+			}
+
+			inssertMessages(arrayMessages);
+		}
 
 	};
 

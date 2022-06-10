@@ -23,6 +23,10 @@ body{
     /*box-sizing: border-box;*/
 }
 
+.vjs-chat-control{
+    background-image: url(likeWhite.png);
+}
+
 .chat-list-messages{
     margin-bottom: 5px;
 }
@@ -70,6 +74,34 @@ body{
     display: flex;
 }
 
+.chat-message-pin{
+    position: absolute;
+    top: 0;
+}
+.chat-message-comment-pin{
+    display: flex;
+}
+
+.message-pin-img{
+    border-right: 2px solid white;
+}
+
+.chat-pin-icon{
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 0px 0px;
+    display: grid;
+    align-self: start;
+}
+
+.chat-text-pin{
+    padding-left: 10px;
+}
+
+.chat-message-admin .chat-message-comment{
+    background: linear-gradient(to bottom right, rgb(45 152 245), rgb(16 93 202));
+}
+
 .chat-message-comment{
     padding: 5px 10px;
 }
@@ -96,7 +128,7 @@ body{
     justify-content: space-between;
 }
 
-.chat-bottom img{
+.chat-bottom .icon-user{
     width: 23px;
 }
 
@@ -143,6 +175,7 @@ body{
 }
 
 
+
 .chat-buttom-like{
     width: 32px;
     height: 32px;
@@ -159,7 +192,7 @@ body{
 
 .chat-buttom-like .heart {
     opacity: 1;
-    background-image: url(image/likeWhite.png);
+    background-image: url(likeWhite.png);
     width: 20px;
     height: 20px;
     background-position: center;
