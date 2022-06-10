@@ -19,7 +19,7 @@
 
 					<div class="chat-message-block">
 						<div class="chat-message-avatar">
-							<img class="chat-avatar-img" src="image/icon-user">
+							<img class="chat-avatar-img" src="image/icon-user.png">
 						</div>
 
 						<div class="chat-message-comment">
@@ -30,7 +30,7 @@
 
 					<div class="chat-message-block">
 						<div class="chat-message-avatar">
-							<img class="chat-avatar-img" src="image/icon-user">
+							<img class="chat-avatar-img" src="image/icon-user.png">
 						</div>
 
 						<div class="chat-message-comment chat-message-comment-admin">
