@@ -175,7 +175,7 @@
 					let chatMessages = document.querySelector('.chat-list-messages');
 					let template = `<div id=${i} class="chat-message-block <!---${array[i].isPinned ? 'chat-message-pin' : ''}-->">
 						<span class="chat-message-avatar">
-							<img class="chat-avatar-img" src="${(array[i].avatar !== null) ? array[i].avatar : 'imege/icon-user.png'}">
+							<img class="chat-avatar-img" src="${(array[i].avatar !== null) ? array[i].avatar : 'image/icon-user.png'}">
 						</span>
 
 						<div class="chat-message-comment ${array[i].isAdmin ? 'chat-message-comment-admin' : ''}">
