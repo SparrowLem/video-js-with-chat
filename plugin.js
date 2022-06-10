@@ -44,7 +44,7 @@
 
 				<div class ="chat-bottom">
 					<div class="chat-textbox">
-						<img class="icon-user" src="iconUser.png">
+						<img class="icon-user" src="image/iconUser.png">
 
 						<form  class="chat-input" action="" method="post">
 							<input class="input-text" type="text" required placeholder="Добавить комментарий" maxlength="300" contenteditable="true">
@@ -175,7 +175,7 @@
 					let chatMessages = document.querySelector('.chat-list-messages');
 					let template = `<div id=${i} class="chat-message-block <!---${array[i].isPinned ? 'chat-message-pin' : ''}-->">
 						<span class="chat-message-avatar">
-							<img class="chat-avatar-img" src="${(array[i].avatar !== null) ? array[i].avatar : 'icon-user.png'}">
+							<img class="chat-avatar-img" src="${(array[i].avatar !== null) ? array[i].avatar : 'imege/icon-user.png'}">
 						</span>
 
 						<div class="chat-message-comment ${array[i].isAdmin ? 'chat-message-comment-admin' : ''}">
@@ -190,7 +190,7 @@
 
 					<div class="chat-message-comment chat-message-comment-pin">
 						<div class="message-pin-img">
-							<img class="chat-pin-icon" src="point11.png">
+							<img class="chat-pin-icon" src="image/point.png">
 						</div>
 						<div class="chat-text-pin">
 							<div class="chat-message-user">${array[i].userName}</div>
