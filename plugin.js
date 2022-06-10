@@ -15,7 +15,32 @@
 
 			this.el().innerHTML = `
 				<div class="chat-list-messages" style="height: 80%; background: rgba(205, 214, 219, 0.1);
-				overflow: scroll;"></div>
+				overflow: scroll;">
+
+					<div class="chat-message-block">
+						<div class="chat-message-avatar">
+							<img class="chat-avatar-img" src="image/icon-user">
+						</div>
+
+						<div class="chat-message-comment">
+							<span class="chat-message-user">User1</span>
+							<p class="chat-message-text">Какие дельфины самые большие?</p>
+						</div>
+					</div>
+
+					<div class="chat-message-block">
+						<div class="chat-message-avatar">
+							<img class="chat-avatar-img" src="image/icon-user">
+						</div>
+
+						<div class="chat-message-comment chat-message-comment-admin">
+							<span class="chat-message-user">Admin</span>
+							<p class="chat-message-text">Самый большой дельфин - касатка. Коса́тка (лат. Orcinus orca) — вид китообразных из семейства дельфиновых (дельфинов)
+							 парвотряда зубатых китов. Единственный современный представитель рода косаток.</p>
+						</div>
+					</div>
+
+				</div>
 
 				<div class ="chat-bottom">
 					<div class="chat-textbox">
