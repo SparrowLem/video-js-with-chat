@@ -20,37 +20,55 @@ body{
    border: 1px solid;
     padding: 0 10px;
     max-width: 100%;
-    /*box-sizing: border-box;*/
 }
 
-.vjs-chat-control{
-    background-image: url(image/likeWhite.png);
+.vjs-button-chat .vjs-icon-placeholder{
+    opacity: 1;
+    width: 15px;
+    height: 15px;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+    margin: 0 auto;
 }
+
 
 .chat-list-messages{
     margin-bottom: 5px;
+
 }
+
+ ul{
+    padding: 0;
+ }
+
+li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-usermes{
+    overflow: scroll;
+    height: 100px;
+    margin: 3px;
+}
+
 .chat-message-avatar{
-    /*width: 30px;
-    height: 30px;*/
     display: grid;
     align-self: start;
     border: 1px solid;
     border-radius: 50%;
     padding: 1px;
     margin: 5px;
-    /*display: flex;*/
-    /*border-radius: 10px;*/
 }
 
 .chat-message-avatar .chat-avatar-img{
-    /*background-image: url(likeWhite.png);*/
-    /*background-image: url(likeWhite.png);*/
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-position: center; 
+    background-repeat: no-repeat; 
     background-size: cover;
     border-color: black;
 }
@@ -63,7 +81,7 @@ body{
 }
 
 .chat-message-comment-admin{
-    background: linear-gradient(to bottom right, rgb(45 152 245), rgb(16 93 202));
+    background: linear-gradient(to bottom right, rgb(45 152 245), rgb(16 93 202)); 
 }
 
 .chat-message-comment-user{
@@ -75,9 +93,14 @@ body{
 }
 
 .chat-message-pin{
-    position: absolute;
+    /*position: fixed;*/
     top: 0;
 }
+
+.chat-message-pin div{
+    padding: 3px;
+}
+
 .chat-message-comment-pin{
     display: flex;
 }
@@ -99,7 +122,7 @@ body{
 }
 
 .chat-message-admin .chat-message-comment{
-    background: linear-gradient(to bottom right, rgb(45 152 245), rgb(16 93 202));
+    background: linear-gradient(to bottom right, rgb(45 152 245), rgb(16 93 202)); 
 }
 
 .chat-message-comment{
@@ -150,6 +173,7 @@ body{
     border: none;
     /*background: rgba(205, 214, 219, 0.3)
     opacity: 0;*/
+    color: white;
     background: none;
     margin-left: 7px;
     padding: 0;
@@ -160,7 +184,7 @@ body{
 .chat-input {
     display: flex;
     width: 100%
-
+    
 }
 
 .input-text{
@@ -174,6 +198,13 @@ body{
     font-size: 12px;
 }
 
+.vjs-chat-control{
+    color:rgb(63, 147, 243);
+}
+
+.vjs-chat-control:hover{
+    cursor: pointer;
+}
 
 
 .chat-buttom-like{
@@ -192,27 +223,25 @@ body{
 
 .chat-buttom-like .heart {
     opacity: 1;
-    background-image: url(image/likeWhite.png);
+    background-image: url(likeWhite.png);
     width: 20px;
     height: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-position: center; 
+    background-repeat: no-repeat; 
     background-size: cover;
     }
 
+.vjs-chat-control .vjs-icon-placeholder{
+    color: rgb(63, 147, 243);
+    width: 16px;
+    height: 15px;
+}
 
-/*.chat-buttom-like img{
-    height: 20px;
-    width: 20px;
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}*/
 
 .vjs-chat-content-hide{
-    display: block;
-    height:200px;
+    visibility: visible;
+    height: 60%;
+    /*height:200px;*/
 	z-index: 9999;
     position: absolute;
 	bottom: 30px;
@@ -238,6 +267,5 @@ body{
 }
 
 .vjs-chat-content {
-    display: hidden;
-
+    visibility: hidden;
 };
