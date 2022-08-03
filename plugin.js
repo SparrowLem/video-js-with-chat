@@ -217,7 +217,7 @@
 					let template = `<li>
 					<div class="chat-message-block">
 					<span class="chat-message-avatar">
-						<img class="chat-avatar-img" src="icon-user.png">
+						<img class="chat-avatar-img" src="image/icon-user.png">
 					</span>
 
 					<div class="chat-message-comment">
