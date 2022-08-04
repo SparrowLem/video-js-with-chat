@@ -50,8 +50,15 @@ li{
 
 .chat-usermes{
     overflow: scroll;
-    height: 100px;
     margin: 3px;
+}
+
+.chat-usermes-w-pin{
+   height: 100px; 
+}
+
+.chat-usermes-full{
+    height: 190px;
 }
 
 .chat-message-avatar{
@@ -229,12 +236,16 @@ li{
     background-position: center; 
     background-repeat: no-repeat; 
     background-size: cover;
-    }
+}
 
-.vjs-chat-control .vjs-icon-placeholder{
+.chat-icon-placeholder{
     color: rgb(63, 147, 243);
     width: 16px;
     height: 15px;
+}
+    
+.chat-icon-placeholder-close{
+    color: #ffffff;
 }
 
 
